@@ -1,0 +1,24 @@
+@import controllers.Post
+@import java.time.format.DateTimeFormatter
+
+@(posts: Seq[Post])
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/main.css")">
+    <title>マイクロブログアプリケーション</title>
+</head>
+<body>
+<h1>投稿へのコメント一覧</h1>
+@for(post <- posts){
+<dl>
+    <dt class="name">@post.user_id</dt>
+    <dd class="time">@post.posted_at.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))</dd>
+    <dd>@post.text</dd>
+    <dd class="comment_count">▶ @post.comment_count</dd>
+</dl>
+}
+<a href="@routes.BlogController.get">戻る</a>
+</body>
+</html>

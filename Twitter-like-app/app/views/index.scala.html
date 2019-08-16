@@ -1,0 +1,38 @@
+@import controllers.Post
+
+@(posts: Seq[Post])
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/main.css")">
+    <script type="text/javascript" src="@routes.Assets.versioned("javascripts/main.js")"></script>
+    <title>マイクロブログアプリケーション</title>
+</head>
+<body>
+<h1>投稿一覧</h1>
+<form method="POST" action="/posts/create">
+    <input type="hidden" name="post_id" value="">
+    <input type="submit" class="submit_create" value="新規投稿作成　">
+</form>
+@for(post <- posts){
+<dl>
+    <dt class="name">@post.user_id</dt>
+    <dd class="time">@post.posted_at</dd>
+    <dd>@post.text</dd>
+    <dd>
+        <form method="GET" action="/posts/@post.id/comments">
+            <input type="hidden" name="post_id" value="@post.id">
+            <input type="submit" id="submit_comments" value="▶ @post.comment_count">
+        </form>
+    </dd>
+    <dd>
+        <form method="POST" action="/posts/@post.id/comments/create">
+            <input type="hidden" name="post_id" value="@post.id">
+            <input type="submit" class="submit_create" value="投稿へのコメント作成　">
+        </form>
+    </dd>
+</dl>
+}
+</body>
+</html>

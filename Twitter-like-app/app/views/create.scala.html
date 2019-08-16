@@ -1,0 +1,20 @@
+@(blogForm: Form[PostRequest], post_id: String)(implicit request: RequestHeader, messagesProvider: MessagesProvider)
+@import helper._
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/main.css")">
+    <title>マイクロブログアプリケーション</title>
+</head>
+<body>
+<h1>@if(post_id != ""){投稿へのコメント作成}else{新規投稿作成}</h1>
+@helper.form(action = routes.BlogController.post) {
+@inputText(blogForm("user_id"))
+@inputText(blogForm("text"))
+<input type="hidden" name="post_id" value="@post_id">
+<input type="submit" class="submit_create" value="投稿　">
+}
+<br><a href="@routes.BlogController.get">戻る</a>
+</body>
+</html>

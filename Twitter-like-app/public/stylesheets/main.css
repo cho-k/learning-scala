@@ -1,0 +1,56 @@
+dl {
+    background: #ECECEC;
+    max-width: 30vw;
+    padding: 5px;
+}
+
+dt.name {
+    font-weight: bold;
+}
+
+dd {
+    margin: 0;
+}
+
+dd.time {
+    color: gray;
+}
+
+dd.comment_count{
+    font-weight: bold;
+    padding: 0.25em 0.5em;
+    font-size: small;
+}
+
+input#submit_comments {
+    position: relative;
+    display: inline-block;
+    font-weight: bold;
+    padding: 0.25em 0.5em;
+    text-decoration: none;
+    color: #00BCD4;
+    background: #ECECEC;
+    border: 0;
+    transition: .2s;
+    cursor: pointer;
+}
+input#submit_comments:hover {
+    background: #636363;
+}
+
+input.submit_create {
+    position: relative;
+    display: inline-block;
+    font-weight: bold;
+    padding: 0.25em 0.5em;
+    text-decoration: none;
+    color: #00BCD4;
+    background: #ECECEC;
+    border-radius: 0 15px 15px 0;
+    border: 0;
+    transition: .2s;
+    cursor: pointer;
+}
+input.submit_create:hover {
+    background: #636363;
+}

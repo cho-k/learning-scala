@@ -1,0 +1,53 @@
+package controllers
+
+import javax.inject._
+import play.api.mvc._
+import play.api.data._
+import play.api.data.Forms._
+import play.api.i18n.I18nSupport
+
+@Singleton
+case class PostRequest(name: String, text: String, post_id: String)
+
+class BlogController @Inject()(cc: ControllerComponents)
+    extends AbstractController(cc)
+    with I18nSupport {
+
+  private[this] val blogForm = Form(
+    mapping(
+      "name" -> text,
+      "text" -> text,
+      "post_id" -> text
+    )(PostRequest.apply)(PostRequest.unapply)
+  )
+
+  def get() = Action { implicit request =>
+    Ok(views.html.index(PostRepository.getAllPosts("")))
+  }
+
+  def create() = Action { implicit request =>
+    Ok(views.html.create(blogForm, ""))
+  }
+
+  def post() = Action { implicit request =>
+    blogForm.bindFromRequest.fold(
+      errors => {
+        BadRequest("error 400")
+      },
+      success => {
+        val postRequest = blogForm.bindFromRequest.get
+        val post = PostRequest(postRequest.name, postRequest.text, postRequest.post_id)
+        PostRepository.insertPost(post)
+        Redirect("/posts")
+      }
+    )
+  }
+
+  def getComments(post_id: String) = Action { implicit request =>
+    Ok(views.html.comments(PostRepository.getAllPosts(post_id)))
+  }
+
+  def createComment(post_id: String) = Action { implicit request =>
+    Ok(views.html.create(blogForm, post_id))
+  }
+}
